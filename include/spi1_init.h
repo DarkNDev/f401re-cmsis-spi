@@ -1,0 +1,33 @@
+#ifndef SPI1_INIT_H
+#define SPI1_INIT_H
+
+#include "stm32f401xe.h"
+
+static inline void SPI1_Init(void) {
+  RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+  RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
+
+  GPIOA->MODER &= ~(GPIO_MODER_MODE4 | GPIO_MODER_MODE5 | GPIO_MODER_MODE6 |
+                    GPIO_MODER_MODE7);
+  GPIOA->MODER |= (GPIO_MODER_MODE4_0 | GPIO_MODER_MODE5_1 |
+                   GPIO_MODER_MODE6_1 | GPIO_MODER_MODE7_1);
+
+  GPIOA->BSRR = GPIO_BSRR_BS4;
+
+  GPIOA->OSPEEDR |= (GPIO_OSPEEDER_OSPEEDR4 | GPIO_OSPEEDER_OSPEEDR5 |
+                     GPIO_OSPEEDER_OSPEEDR6 | GPIO_OSPEEDER_OSPEEDR7);
+
+  GPIOA->AFR[0] &= ~((0xFU << 20) | (0xFU << 24) | (0xFU << 28));
+  GPIOA->AFR[0] |= ((5U << 20) | (5U << 24) | (5U << 28));
+
+  SPI1->CR1 =
+      SPI_CR1_MSTR | SPI_CR1_SSM | SPI_CR1_SSI | (0b001U << SPI_CR1_BR_Pos);
+
+  SPI1->CR1 |= SPI_CR1_SPE;
+
+  // Enable SPI1 interrupt in NVIC
+  NVIC_SetPriority(SPI1_IRQn, 1);
+  NVIC_EnableIRQ(SPI1_IRQn);
+}
+
+#endif /* SPI1_INIT_H */

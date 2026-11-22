@@ -108,6 +108,7 @@ static inline uint8_t MCP23S17_ReadResult(int slot) {
 
 int main(void) {
   SPI1_Init();
+  EnableSPI1_Interrupt();
 
   MCP23S17_WriteEnqueue(MCP_IODIRB, 0b00000100);
   MCP23S17_WriteEnqueue(MCP_GPPUB, 0b00000100);

@@ -123,6 +123,7 @@ void EXTI0_IRQHandler(void) {
 
 int main(void) {
   SPI1_Init();
+  EnableSPI1_Interrupt();
 
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
   

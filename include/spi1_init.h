@@ -24,7 +24,9 @@ static inline void SPI1_Init(void) {
       SPI_CR1_MSTR | SPI_CR1_SSM | SPI_CR1_SSI | (0b001U << SPI_CR1_BR_Pos);
 
   SPI1->CR1 |= SPI_CR1_SPE;
+}
 
+static inline void EnableSPI1_Interrupt(void) {
   // Enable SPI1 interrupt in NVIC
   NVIC_SetPriority(SPI1_IRQn, 1);
   NVIC_EnableIRQ(SPI1_IRQn);

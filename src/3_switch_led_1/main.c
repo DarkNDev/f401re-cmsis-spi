@@ -68,6 +68,7 @@ uint8_t MCP23S17_ReadReg(uint8_t reg) {
 
 int main(void) {
   SPI1_Init();
+  EnableSPI1_Interrupt();
 
   MCP23S17_WriteReg(MCP_IODIRB, 0b00000100);
   while (spi.busy)

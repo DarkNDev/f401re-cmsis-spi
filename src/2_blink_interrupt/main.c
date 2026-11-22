@@ -69,6 +69,7 @@ void MCP23S17_WriteReg(uint8_t reg, uint8_t value) {
 int main(void) {
   TIM2_Init();
   SPI1_Init();
+  EnableSPI1_Interrupt();
 
   MCP23S17_WriteReg(MCP_IODIRA, 0);
 
